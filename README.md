@@ -144,4 +144,4 @@ tag.
 
 ## License
 
-There's no license yet.
+MIT. See [LICENSE](LICENSE).
