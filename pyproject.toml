@@ -1,7 +1,7 @@
 [project]
 name = "git-tools-mcp-client"
 version = "0.1.0"
-description = "Add your description here"
+description = "A from-scratch MCP client in Python: starts the git tools server, lists its tools and calls them, with a small CLI on top."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
