@@ -14,13 +14,14 @@ This is part 2 of the MCP series.
 
 - `GitToolsClient` wraps the SDK's `Client` and gives you typed methods: `git_diff`, `git_commit`
   and `list_tool_names`.
-- On connect it checks that the server still has the tools it needs (`REQUIRED_TOOLS`) and stops
-  with a clear message if one is missing.
-- A failed tool call (`is_error=True`) is turned into a `ToolCallError`, in one place.
-- The server launch details live in `mcp.json`, validated by pydantic.
-- Errors come out as one line, `error: ...`, with exit code 1. `ExceptionGroup`s from the task
-  group are unwrapped with `except*`.
-- Every request has a timeout (30 seconds by default).
+- On connect it checks that the server still has the tools it needs (`REQUIRED_TOOLS`). If one is
+  missing, it stops and names it.
+- `_call` turns a failed tool call (`is_error=True`) into a `ToolCallError`, so that check lives
+  in one place.
+- Launch details live in `mcp.json`, which pydantic validates.
+- Errors print as one line, `error: ...`, with exit code 1. The task group wraps the real error
+  in `ExceptionGroup`s, so `main()` uses `except*` and walks down to it.
+- Every request times out after 30 seconds unless you pass `--timeout`.
 
 ## Requirements
 
@@ -112,8 +113,8 @@ src/git_tools_mcp_client/
 
 ## Following the video: tags
 
-Each step of the video is one commit with an annotated tag. Check one out to see the code exactly
-as it is at the end of that step:
+Each step of the video is one commit with an annotated tag. Check one out to see the code as it
+stands at the end of that step:
 
 ```
 git checkout step-04-typed-client
@@ -143,4 +144,4 @@ tag.
 
 ## License
 
-None yet. Add one before reusing this code.
+There's no license yet.
