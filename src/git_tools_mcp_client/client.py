@@ -15,11 +15,16 @@ from git_tools_mcp_client.exceptions import (
     ToolCallError,
 )
 
+DEFAULT_TIMEOUT = 30.0
+
+
 class GitToolsClient:
     REQUIRED_TOOLS: ClassVar[frozenset[str]] = frozenset({"git_diff", "git_commit"})
 
-    def __init__(self, params: StdioServerParameters) -> None:
-        self._client = Client(params)
+    def __init__(
+        self, params: StdioServerParameters, timeout: float | None = DEFAULT_TIMEOUT
+    ) -> None:
+        self._client = Client(params, read_timeout_seconds=timeout)
 
     async def __aenter__(self):
         await self._client.__aenter__()
@@ -88,7 +93,7 @@ async def run(args: Namespace) -> None:
     repo = resolve_repo(args.repo) if args.needs_repo else None
     params = load_params(args.config, args.server, repo)
 
-    async with GitToolsClient(params) as git:
+    async with GitToolsClient(params, timeout=args.timeout) as git:
         handler = COMMANDS[args.cmd]
         await handler(git, args)
 

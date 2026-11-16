@@ -11,6 +11,12 @@ def parse_args() -> argparse.Namespace:
         default=Path(os.environ.get("GIT_TOOLS_CONFIG", "mcp.json")),
         help="path to the MCP servers config",
     )
+    p.add_argument(
+        "--timeout",
+        type=float,
+        default=30.0,
+        help="seconds to wait for a server response (default: 30s)",
+    )
     p.add_argument("--server", default="git-tools", help="server name in the config")
     p.add_argument(
         "--repo", default=".", type=Path, help="repo the server should operate on"
