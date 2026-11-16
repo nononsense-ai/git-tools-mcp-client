@@ -5,6 +5,7 @@ from collections.abc import Awaitable, Callable
 from typing import Any, ClassVar
 
 from mcp import Client, StdioServerParameters
+from mcp.shared.exceptions import MCPError
 
 from git_tools_mcp_client.cli import parse_args
 from git_tools_mcp_client.config import load_params, resolve_repo
@@ -92,12 +93,21 @@ async def run(args: Namespace) -> None:
         await handler(git, args)
 
 
+def leaves(exc: BaseException):
+    if isinstance(exc, BaseExceptionGroup):
+        for sub in exc.exceptions:
+            yield from leaves(sub)
+    else:
+        yield exc
+
+
 def main() -> None:
     args = parse_args()
     try:
         asyncio.run(run(args))
-    except ClientError as e:
-        print(f"error: {e}", file=sys.stderr)
+    except* (ClientError, OSError, MCPError) as eg:
+        for e in leaves(eg):
+            print(f"error: {e}", file=sys.stderr)
         sys.exit(1)
 
 
