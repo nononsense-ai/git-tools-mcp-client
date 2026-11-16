@@ -1,0 +1,20 @@
+[project]
+name = "git-tools-mcp-client"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "kaushik", email = "hello@nononsensecode.dev" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "mcp>=2.3.0",
+    "pydantic>=2.14.3",
+]
+
+[project.scripts]
+git-tools-mcp-client = "git_tools_mcp_client:main"
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14.0"]
+build-backend = "uv_build"
