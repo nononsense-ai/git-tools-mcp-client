@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-git-tools-mcp-client = "git_tools_mcp_client:main"
+git-tools-mcp-client = "git_tools_mcp_client.client:main"
 
 [build-system]
 requires = ["uv_build>=0.13.1,<0.14.0"]
