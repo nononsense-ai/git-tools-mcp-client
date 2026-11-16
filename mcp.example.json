@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "git-tools": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "/path/to/git-tools-mcp-server",
+        "git-tools-mcp-server"
+      ]
+    }
+  }
+}
